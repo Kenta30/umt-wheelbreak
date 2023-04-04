@@ -1,4 +1,4 @@
-local wheelBreakSpeed = 100 -- Speed at which the wheel breaks
+local wheelBreakSpeed = 200 -- Speed at which the wheel breaks
 
 --[[ Vehicle classes:
 0: Compacts   1: Sedans   2: SUVs   3: Coupes   4: Muscle
