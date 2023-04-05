@@ -1,4 +1,4 @@
-local wheelBreakSpeed = 200 -- Speed at which the wheel breaks
+local wheelBreakSpeed = 100 -- Speed at which the wheel breaks
 
 --[[ Vehicle classes:
 0: Compacts   1: Sedans   2: SUVs   3: Coupes   4: Muscle
@@ -27,14 +27,17 @@ CreateThread(function()
         if IsPedInAnyVehicle(playerPed, false) then
             local vehicle = GetVehiclePedIsIn(playerPed,false)
             if GetPedInVehicleSeat(vehicle, -1) ~= 0 and isVehicleClassValid(GetVehicleClass(vehicle)) then
+              waitLoop = 300
+              local vehicleSpeed = math.ceil(GetEntitySpeed(vehicle) * 3.6)
+              if vehicleSpeed >= wheelBreakSpeed then
                 waitLoop = 10
-                local vehicleSpeed = math.ceil(GetEntitySpeed(vehicle) * 3.6)
-                if HasEntityCollidedWithAnything(vehicle) and vehicleSpeed >= wheelBreakSpeed then
-                    local randomWheelIndex = math.random(0,3) -- Wheel index to break off
-                    ---@see https://github.com/citizenfx/fivem/commit/46205c9ff15bdc9e19d81dd126500a854c8547e9
+                if HasEntityCollidedWithAnything(vehicle) then
+                    local randomWheelIndex = math.random(0, 1) -- Wheel index to break off
+                    --@see https://github.com/citizenfx/fivem/commit/46205c9ff15bdc9e19d81dd126500a854c8547e9
                     BreakOffVehicleWheel(vehicle, randomWheelIndex, true, false, true, false)
                     waitLoop = 5000
                 end
+              end
             end
         end
         Wait(waitLoop)
